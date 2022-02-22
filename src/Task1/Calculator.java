@@ -7,6 +7,11 @@ public class Calculator {
     private String arithmeticAction;
     protected ArithmeticActionStrategy arithmeticActionStrategy;
     private Actions[] actions = Actions.values();
+    private final ActionFactory actionFactory;
+
+    public Calculator(ActionFactory actionFactory){
+        this.actionFactory = actionFactory;
+    }
 
 
     public Actions getArithmeticAction() {
@@ -50,7 +55,8 @@ public class Calculator {
         return 0;
     }
 
-    public int getCalculatedValue() {
+    public int getCalculatedValue(Actions action) {
+        Calculator act = actionFactory.createCalculator(action);
         Calculator[] actions = {new Addition(), new Subtraction(), new Division(), new Multiplication()};
         for (int i = 0; i < actions.length; i++) {
             if (this.getArithmeticAction().ordinal() == i){
